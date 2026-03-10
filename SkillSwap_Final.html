@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillSwap — Exchange Skills, Not Money</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   SKILLSWAP — GALAXY PALETTE
+   Deep Navy · Violet · Cyan · Gold
+   + Glassmorphism + Animated Match Cards
+══════════════════════════════════════════ */
+
+:root {
+  --transition: all 0.25s ease;
+}
+
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  --bg:         #060818;
+  --bg2:        #090d1f;
+  --surface:    #0d1228;
+  --card:       rgba(13,18,40,0.72);
+  --card2:      rgba(17,24,52,0.80);
+  --border:     rgba(120,130,255,0.12);
+  --border2:    rgba(120,130,255,0.22);
+
+  --text-primary:   #ffffff;
+  --text-secondary: #dde3f5;
+  --text-muted:     #b0bcd8;
+  --text-faint:     #7a8ab0;
+
+  /* Galaxy palette */
+  --accent:      #7b6fff;   /* violet */
+  --accent-rgb:  123,111,255;
+  --accent-glow: rgba(123,111,255,0.28);
+  --accent2:     #ff4db8;   /* rose */
+  --accent2-rgb: 255,77,184;
+  --accent3:     #00e5c8;   /* cyan */
+  --accent3-rgb: 0,229,200;
+  --gold:        #ffc542;
+  --gold-rgb:    255,197,66;
+  --lime:        #a8ff3e;
+  --lime-rgb:    168,255,62;
+
+  --nav-bg:  rgba(6,8,24,0.88);
+  --shadow:  0 6px 19px rgba(0,0,0,0.163);
+  --shadow2: 0 3px 11px rgba(0,0,0,0.1);
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg:         #eef0ff;
+  --bg2:        #e6e8ff;
+  --surface:    #ffffff;
+  --card:       rgba(255,255,255,0.78);
+  --card2:      rgba(238,240,255,0.88);
+  --border:     rgba(100,90,220,0.14);
+  --border2:    rgba(100,90,220,0.24);
+
+  --text-primary:   #000000;
+  --text-secondary: #111320;
+  --text-muted:     #1e2340;
+  --text-faint:     #3a4260;
+
+  --accent:      #5a4ef0;
+  --accent-rgb:  90,78,240;
+  --accent-glow: rgba(90,78,240,0.18);
+  --accent2:     #d4007a;
+  --accent2-rgb: 212,0,122;
+  --accent3:     #00b8a0;
+  --accent3-rgb: 0,184,160;
+  --gold:        #e09000;
+  --gold-rgb:    224,144,0;
+  --lime:        #70c800;
+  --lime-rgb:    112,200,0;
+
+  --nav-bg:  rgba(238,240,255,0.92);
+  --shadow:  0 6px 19px rgba(90,78,240,0.035);
+  --shadow2: 0 3px 11px rgba(90,78,240,0.025);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+  line-height: 1.6;
+}
+h1,h2,h3,h4,h5,.brand-text { font-family: 'Syne', sans-serif; }
+
+/* ── GALAXY MESH BACKGROUND ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 700px 500px at 15% 20%,  rgba(123,111,255,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 85% 15%,  rgba(0,229,200,0.09)   0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 50% 90%,  rgba(255,77,184,0.10)  0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 90% 65%,  rgba(255,197,66,0.07)  0%, transparent 70%);
+  animation: meshShift 18s ease-in-out infinite alternate;
+}
+@keyframes meshShift {
+  0%   { opacity:0.9; transform:scale(1)    rotate(0deg); }
+  50%  { opacity:1;   transform:scale(1.04) rotate(1deg); }
+  100% { opacity:0.9; transform:scale(1)    rotate(0deg); }
+}
+
+/* Star field */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.30) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 55%, rgba(255,255,255,0.20) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 25%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 80%, rgba(255,255,255,0.30) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 70%, rgba(200,210,255,0.40) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 40%, rgba(200,210,255,0.30) 0%, transparent 100%);
+  background-color: var(--bg);
+}
+
+/* ══════════════════════════════════════════
+   NAVBAR — glass
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 64px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+.brand-text {
+  font-size: 1.45rem; font-weight: 800; letter-spacing: -0.5px;
+  color: var(--text-primary);
+}
+.brand-text em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-center {
+  display: flex; gap: 0.25rem; align-items: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 4px;
+  backdrop-filter: blur(10px);
+}
+.nav-tab {
+  padding: 0.4rem 1.1rem; border-radius: 9px; cursor: pointer;
+  font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+  transition: var(--transition); border: none; background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+.nav-tab.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+.nav-right { display:flex; align-items:center; gap:0.75rem; }
+.theme-toggle {
+  width:40px; height:40px; border-radius:10px;
+  background: rgba(255,255,255,0.05); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:1.1rem; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  backdrop-filter: blur(8px);
+}
+.theme-toggle:hover { border-color:var(--accent3); transform:scale(1.1) rotate(15deg); }
+.nav-user-chip {
+  display:flex; align-items:center; gap:0.5rem;
+  background: rgba(255,255,255,0.05); border:1px solid var(--border);
+  border-radius:10px; padding:0.4rem 0.9rem;
+  font-size:0.82rem; font-weight:600; color:var(--text-secondary);
+  backdrop-filter: blur(8px);
+}
+.mini-av {
+  width:26px; height:26px; border-radius:50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.72rem; font-weight:800; color:#fff;
+}
+
+/* ══════════════════════════════════════════
+   SCREENS
+══════════════════════════════════════════ */
+.screen { display:none; min-height:100vh; padding-top:64px; }
+.screen.active { display:block; }
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.btn {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600; font-size:0.9rem;
+  border:none; border-radius:10px;
+  padding:0.65rem 1.5rem; cursor:pointer;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  text-decoration:none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color:#fff; box-shadow:0 4px 18px var(--accent-glow);
+}
+.btn-primary:hover { filter:brightness(1.12); transform:translateY(-2px) scale(1.02); box-shadow:0 8px 28px var(--accent-glow); }
+.btn-primary:active { transform:translateY(0) scale(0.98); }
+.btn-ghost {
+  background: rgba(255,255,255,0.05); color:var(--text-secondary);
+  border:1px solid var(--border2); backdrop-filter:blur(8px);
+}
+.btn-ghost:hover { border-color:var(--accent3); color:var(--accent3); background:rgba(0,229,200,0.06); transform:translateY(-1px); }
+.btn-danger  { background:linear-gradient(135deg,var(--accent2),#c0006e); color:#fff; }
+.btn-danger:hover  { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-success { background:linear-gradient(135deg,var(--accent3),#009980); color:#fff; }
+.btn-success:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-sm { padding:0.45rem 1rem; font-size:0.8rem; border-radius:8px; }
+.btn-xs { padding:0.3rem 0.7rem; font-size:0.75rem; border-radius:6px; }
+
+/* ══════════════════════════════════════════
+   GLASS CARDS
+══════════════════════════════════════════ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem;
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1),
+              box-shadow 0.35s ease,
+              border-color 0.25s ease,
+              background-image 0.25s ease;
+  position: relative; overflow: hidden;
+  will-change: transform, box-shadow;
+}
+/* subtle top sheen */
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  pointer-events:none;
+}
+.card:hover {
+  border-color: transparent;
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, rgba(123,111,255,0.7), rgba(0,229,200,0.5));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.113),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 20px rgba(123,111,255,0.02),
+    0 0 45px rgba(123,111,255,0.02);
+  transform: translateY(-4px);
+}
+.card-sm { border-radius:12px; padding:1.1rem; }
+
+/* ══════════════════════════════════════════
+   TAGS / BADGES
+══════════════════════════════════════════ */
+.tag {
+  display:inline-flex; align-items:center;
+  font-size:0.75rem; font-weight:600;
+  border-radius:20px; padding:0.25rem 0.7rem;
+}
+.tag-teach { background:rgba(123,111,255,0.13); color:var(--accent);  border:1px solid rgba(123,111,255,0.28); }
+.tag-want  { background:rgba(255,77,184,0.10);  color:var(--accent2); border:1px solid rgba(255,77,184,0.26); }
+.tag-done  { background:rgba(0,229,200,0.10);   color:var(--accent3); border:1px solid rgba(0,229,200,0.24); }
+.tag-gold  { background:rgba(255,197,66,0.12);  color:var(--gold);    border:1px solid rgba(255,197,66,0.28); }
+.badge { display:inline-block; font-size:0.7rem; font-weight:700; padding:0.2rem 0.55rem; border-radius:20px; }
+.badge-pending { background:rgba(255,197,66,0.16);  color:var(--gold); }
+.badge-active  { background:rgba(0,229,200,0.13);   color:var(--accent3); }
+.badge-done    { background:rgba(123,111,255,0.14);  color:var(--accent); }
+
+/* ══════════════════════════════════════════
+   FORMS
+══════════════════════════════════════════ */
+.form-group { margin-bottom:1.1rem; }
+.form-group label {
+  display:block; font-size:0.8rem; font-weight:600;
+  color:var(--text-muted); margin-bottom:0.4rem;
+  text-transform:uppercase; letter-spacing:0.04em;
+}
+.form-control {
+  width:100%; padding:0.7rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:10px; color:var(--text-primary);
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem;
+  outline:none; transition:var(--transition);
+  backdrop-filter: blur(6px);
+}
+.form-control:focus {
+  border-color:var(--accent3);
+  box-shadow:0 0 0 3px rgba(0,229,200,0.03), 0 0 16px rgba(0,229,200,0.02);
+}
+.form-control::placeholder { color:var(--text-faint); }
+.form-error { font-size:0.78rem; color:var(--accent2); margin-top:0.3rem; display:none; }
+.form-error.show { display:block; }
+
+/* ══════════════════════════════════════════
+   LANDING — HERO
+══════════════════════════════════════════ */
+.hero {
+  min-height:calc(100vh - 64px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:4rem 1.5rem 3rem;
+  position:relative; overflow:hidden;
+}
+.hero-glow { position:absolute; border-radius:50%; pointer-events:none; filter:blur(80px); }
+.glow-1 { width:600px; height:600px; background:rgba(123,111,255,0.12); top:-200px; left:50%; transform:translateX(-50%); }
+.glow-2 { width:320px; height:320px; background:rgba(255,77,184,0.10); bottom:0; right:8%; }
+.glow-3 { width:280px; height:280px; background:rgba(0,229,200,0.09); bottom:10%; left:4%; }
+
+.hero-pill {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background: rgba(123,111,255,0.10);
+  border:1px solid rgba(123,111,255,0.25);
+  border-radius:30px; padding:0.4rem 1.1rem;
+  font-size:0.8rem; font-weight:600; color:var(--accent3);
+  margin-bottom:1.75rem;
+  animation: fadeDown 0.6s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0,229,200,0.02), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.hero h1 {
+  font-size: clamp(2.8rem,7vw,5.5rem);
+  font-weight:800; line-height:1.05; letter-spacing:-2px;
+  color:var(--text-primary); margin-bottom:1.25rem;
+  animation: fadeUp 0.7s ease 0.1s both;
+}
+.grad-text {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 45%, var(--gold) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  background-size:200% 200%;
+  animation: gradShift 5s ease infinite;
+}
+@keyframes gradShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+.hero p {
+  font-size:1.1rem; color:var(--text-secondary); max-width:520px;
+  margin:0 auto 2.25rem; line-height:1.75;
+  animation: fadeUp 0.7s ease 0.2s both;
+}
+.hero-btns {
+  display:flex; gap:0.85rem; justify-content:center; flex-wrap:wrap;
+  animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* Floating chips */
+.float-chips { position:absolute; inset:0; pointer-events:none; }
+.chip {
+  position:absolute;
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:30px; padding:0.4rem 1rem; font-size:0.78rem; font-weight:600;
+  color:var(--text-secondary); display:flex; align-items:center; gap:0.4rem;
+  animation: floatAnim 7s ease-in-out infinite;
+  box-shadow:0 2px 6px rgba(0,0,0,0.062), inset 0 1px 0 rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
+}
+.chip:nth-child(1) { top:18%; left:7%;   animation-delay:0s;   }
+.chip:nth-child(2) { top:22%; right:8%;  animation-delay:1.2s; }
+.chip:nth-child(3) { top:55%; left:4%;   animation-delay:2.4s; }
+.chip:nth-child(4) { top:62%; right:7%;  animation-delay:0.8s; }
+.chip:nth-child(5) { top:12%; right:22%; animation-delay:3s;   }
+.chip:nth-child(6) { top:75%; left:15%;  animation-delay:1.8s; }
+@keyframes floatAnim {
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-14px); }
+}
+
+/* Steps */
+.section { padding:5rem 2rem; }
+.section-header { text-align:center; margin-bottom:3rem; }
+.section-header h2 { font-size:2.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.6rem; }
+.section-header p  { color:var(--text-muted); font-size:1rem; }
+.steps-row {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.25rem; max-width:900px; margin:0 auto;
+}
+.step-card {
+  background: var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:2rem 1.5rem;
+  position:relative; overflow:hidden;
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.35s ease, border-color 0.25s ease, background-image 0.25s ease;
+  backdrop-filter: blur(16px); will-change: transform, box-shadow;
+}
+.step-card:hover {
+  border-color: transparent;
+  transform: translateY(-8px);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.113),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 18px rgba(123,111,255,0.02),
+    0 0 42px rgba(0,229,200,0.02);
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, rgba(123,111,255,0.65), rgba(0,229,200,0.45));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.step-bg-num {
+  position:absolute; top:-10px; right:10px;
+  font-family:'Syne',sans-serif; font-size:5rem; font-weight:800;
+  background:linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  opacity:0.10; line-height:1;
+}
+.step-icon { font-size:2.2rem; margin-bottom:1rem; }
+.step-card h3 { font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-bottom:0.5rem; }
+.step-card p  { font-size:0.85rem; color:var(--text-muted); line-height:1.65; }
+
+/* Benefits */
+.benefits-bg { background:var(--bg2); }
+.benefits-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:1rem; max-width:900px; margin:0 auto;
+}
+.benefit-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:1.5rem; text-align:center;
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.35s ease, border-color 0.25s ease, background-image 0.25s ease;
+  backdrop-filter:blur(14px); will-change: transform, box-shadow;
+}
+.benefit-card:hover {
+  border-color: transparent;
+  transform: translateY(-6px);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.1),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 14px rgba(123,111,255,0.02),
+    0 0 30px rgba(0,229,200,0.02);
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, rgba(123,111,255,0.6), rgba(0,229,200,0.4));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.benefit-card .bi { font-size:1.9rem; margin-bottom:0.7rem; }
+.benefit-card h4 { font-size:0.9rem; font-weight:700; color:var(--text-primary); margin-bottom:0.3rem; }
+.benefit-card p  { font-size:0.78rem; color:var(--text-muted); }
+
+/* CTA */
+.cta-band {
+  background:linear-gradient(135deg, rgba(123,111,255,0.07), rgba(0,229,200,0.05));
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  text-align:center; padding:5rem 2rem;
+}
+.cta-band h2 { font-size:2.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.75rem; }
+.cta-band p  { color:var(--text-muted); margin-bottom:2rem; }
+footer {
+  background:var(--surface); border-top:1px solid var(--border);
+  padding:1.75rem; text-align:center; font-size:0.82rem; color:var(--text-muted);
+}
+
+/* ══════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════ */
+#s-auth { display:none; align-items:center; justify-content:center; min-height:calc(100vh - 64px); padding:2rem 1rem; }
+#s-auth.active { display:flex; }
+.auth-wrap {
+  width:100%; max-width:430px;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:22px; padding:2.5rem;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+  backdrop-filter: blur(22px) saturate(1.5);
+}
+.auth-wrap::before {
+  content:''; position:absolute; top:-100px; right:-100px;
+  width:250px; height:250px; border-radius:50%;
+  background:radial-gradient(circle, rgba(123,111,255,0.18), transparent 70%);
+  pointer-events:none;
+}
+.auth-wrap::after {
+  content:''; position:absolute; bottom:-80px; left:-80px;
+  width:200px; height:200px; border-radius:50%;
+  background:radial-gradient(circle, rgba(0,229,200,0.10), transparent 70%);
+  pointer-events:none;
+}
+.auth-top { text-align:center; margin-bottom:1.75rem; }
+.auth-top .brand-text { font-size:1.7rem; }
+.auth-top p { font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; }
+.tab-switch {
+  display:flex; background:rgba(255,255,255,0.05); border:1px solid var(--border);
+  border-radius:12px; padding:4px; margin-bottom:1.75rem;
+}
+.tab-btn {
+  flex:1; padding:0.55rem; border-radius:9px; text-align:center;
+  font-size:0.85rem; font-weight:700; cursor:pointer;
+  color:var(--text-muted); transition:var(--transition);
+  border:none; background:transparent; font-family:'Plus Jakarta Sans',sans-serif;
+}
+.tab-btn.active { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; box-shadow:0 2px 12px var(--accent-glow); }
+.auth-form { display:none; }
+.auth-form.active { display:block; }
+.auth-submit {
+  width:100%; padding:0.8rem; border:none; border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.95rem; font-weight:700; cursor:pointer;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); margin-top:0.5rem;
+  box-shadow:0 4px 18px var(--accent-glow);
+}
+.auth-submit:hover { filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 8px 28px var(--accent-glow); }
+.auth-foot { text-align:center; margin-top:1rem; font-size:0.82rem; color:var(--text-muted); }
+.auth-foot a { color:var(--accent3); cursor:pointer; font-weight:600; }
+.err-box {
+  background:rgba(255,77,184,0.08); border:1px solid rgba(255,77,184,0.25);
+  border-radius:8px; padding:0.65rem 0.9rem;
+  font-size:0.82rem; color:var(--accent2); display:none; margin-bottom:0.75rem;
+}
+.err-box.show { display:block; }
+
+/* ══════════════════════════════════════════
+   PAGE LAYOUT
+══════════════════════════════════════════ */
+.page { max-width:1140px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+.page-head { margin-bottom:2rem; }
+.page-head h2 { font-size:1.9rem; font-weight:800; color:var(--text-primary); }
+.page-head p  { color:var(--text-muted); margin-top:0.25rem; font-size:0.9rem; }
+
+/* ══════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════ */
+.dash-layout { display:grid; grid-template-columns:280px 1fr; gap:1.5rem; }
+.profile-sidebar {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:1.75rem;
+  position:sticky; top:80px; align-self:start;
+  backdrop-filter:blur(18px);
+}
+.profile-sidebar::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(0,229,200,0.2), transparent);
+}
+.profile-sidebar { position:sticky; overflow:hidden; }
+.profile-sidebar:hover {
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.113),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 18px rgba(123,111,255,0.02),
+    0 0 36px rgba(123,111,255,0.02);
+  transform: translateY(-2px);
+}
+.av-lg {
+  width:76px; height:76px; border-radius:50%;
+  background:linear-gradient(135deg, var(--accent), var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.9rem; font-weight:800; color:#fff;
+  font-family:'Syne',sans-serif; margin:0 auto 0.9rem;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px rgba(123,111,255,0.03), 0 0 24px rgba(123,111,255,0.02);
+}
+.p-name { text-align:center; font-size:1.15rem; font-weight:700; color:var(--text-primary); }
+.p-dept { text-align:center; font-size:0.8rem; color:var(--text-muted); margin-bottom:1.1rem; }
+.rep-box {
+  background:linear-gradient(135deg, rgba(255,197,66,0.14), rgba(255,197,66,0.06));
+  border:1px solid rgba(255,197,66,0.35); border-radius:12px;
+  padding:1rem; text-align:center; margin-bottom:1.25rem;
+  box-shadow: 0 0 24px rgba(255,197,66,0.02), inset 0 1px 0 rgba(255,197,66,0.15);
+}
+.rep-val { font-family:'Syne',sans-serif; font-size:2.4rem; font-weight:800; color:var(--gold); text-shadow:0 0 20px rgba(255,197,66,0.02); }
+.rep-lbl { font-size:0.72rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+.skill-block { margin-bottom:1rem; }
+.skill-block-lbl { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); margin-bottom:0.5rem; }
+.tag-wrap { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.edit-profile-btn {
+  width:100%; padding:0.6rem; margin-top:1rem;
+  background:rgba(255,255,255,0.04); border:1px solid var(--border2);
+  color:var(--text-secondary); border-radius:10px; cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:0.85rem;
+  transition:var(--transition); backdrop-filter:blur(6px);
+}
+.edit-profile-btn:hover { border-color:var(--accent3); color:var(--accent3); }
+
+.ov-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
+.ov-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:1.1rem; text-align:center;
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.35s ease, border-color 0.25s ease, background-image 0.25s ease;
+  backdrop-filter:blur(14px); will-change: transform, box-shadow;
+}
+.ov-card:hover {
+  border-color: transparent;
+  box-shadow:
+    0 5px 13px rgba(0,0,0,0.1),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 16px rgba(123,111,255,0.02),
+    0 0 32px rgba(123,111,255,0.02);
+  transform: translateY(-5px);
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, rgba(123,111,255,0.6), rgba(0,229,200,0.4));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.ov-num {
+  font-family:'Syne',sans-serif; font-size:2rem; font-weight:800;
+  background:linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.ov-card:nth-child(3) .ov-num {
+  background:linear-gradient(135deg, var(--gold), #ff9500);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.ov-lbl { font-size:0.75rem; color:var(--text-muted); font-weight:600; margin-top:0.2rem; }
+
+.section-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:1.5rem; margin-bottom:1.25rem;
+  backdrop-filter:blur(16px); position:relative; overflow:hidden;
+}
+.section-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(123,111,255,0.15), transparent);
+}
+.section-card h3 { font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:1.1rem; }
+
+.act-item {
+  display:flex; align-items:center; gap:0.9rem;
+  padding:0.85rem 0; border-bottom:1px solid var(--border);
+}
+.act-item:last-child { border-bottom:none; padding-bottom:0; }
+.act-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+.ai-blue  { background:rgba(123,111,255,0.12); border:1px solid rgba(123,111,255,0.18); }
+.ai-pink  { background:rgba(255,77,184,0.10);  border:1px solid rgba(255,77,184,0.18); }
+.ai-green { background:rgba(0,229,200,0.10);   border:1px solid rgba(0,229,200,0.18); }
+.act-body { flex:1; }
+.act-body strong { font-size:0.87rem; color:var(--text-primary); display:block; font-weight:600; }
+.act-body span   { font-size:0.76rem; color:var(--text-muted); }
+.quick-btns { display:flex; gap:0.75rem; flex-wrap:wrap; }
+
+/* ══════════════════════════════════════════
+   MATCH CARDS — Galaxy animated
+══════════════════════════════════════════ */
+.filter-row {
+  display:flex; gap:0.75rem; flex-wrap:wrap;
+  margin-bottom:1.5rem; align-items:center;
+}
+.filter-row .form-control { flex:1; min-width:160px; }
+
+.match-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:1.1rem; margin-bottom:2rem;
+}
+
+.match-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px; padding: 1.4rem;
+  position: relative; overflow: hidden;
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  transition: all 0.35s cubic-bezier(0.34,1.2,0.64,1);
+  transform-style: preserve-3d;
+  cursor: default;
+  /* entrance */
+  animation: cardIn 0.45s ease both;
+}
+.match-card:nth-child(1){animation-delay:.04s}
+.match-card:nth-child(2){animation-delay:.09s}
+.match-card:nth-child(3){animation-delay:.14s}
+.match-card:nth-child(4){animation-delay:.19s}
+.match-card:nth-child(5){animation-delay:.24s}
+.match-card:nth-child(6){animation-delay:.29s}
+
+@keyframes cardIn {
+  from { opacity:0; transform:translateY(22px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0)    scale(1);    }
+}
+
+/* coloured top border per card via CSS var */
+.match-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: var(--card-accent, linear-gradient(90deg, var(--accent), var(--accent3)));
+  z-index:1;
+  border-radius:18px 18px 0 0;
+}
+
+/* bottom glow — always visible, card's colour */
+.match-card .card-glow {
+  position:absolute; bottom:-18px; left:50%; transform:translateX(-50%);
+  width:70%; height:36px;
+  background: var(--mc-color, var(--accent));
+  filter: blur(22px);
+  opacity: 0;
+  pointer-events:none; z-index:0;
+  transition: opacity 0.3s, width 0.3s;
+  border-radius:50%;
+}
+.match-card:hover .card-glow {
+  opacity: 0;
+  width: 90%;
+}
+
+/* travelling shimmer on hover */
+.match-card::after {
+  content:'';
+  position:absolute; top:0; left:-100%; width:60%; height:100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  transition: left 0s;
+  pointer-events:none; z-index:0;
+}
+.match-card:hover::after {
+  left:160%;
+  transition: left 0.65s ease;
+}
+
+.match-card:hover {
+  border-color: transparent;
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, var(--mc-color, var(--accent)), rgba(0,229,200,0.6));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 11px 28px rgba(0,0,0,0.138),
+    0 0 0 1px rgba(123,111,255,0.18)),
+    0 0 0px transparent,
+    0 0 0px transparent;
+  transform: translateY(-9px) scale(1.02);
+}
+
+/* score glow ring around avatar */
+.mc-head { display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem; position:relative; z-index:1; }
+.av-md {
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.05rem; font-weight:800; color:#fff;
+  font-family:'Syne',sans-serif; flex-shrink:0;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--mc-color, var(--accent));
+  animation: avatarPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes avatarPop { from{transform:scale(0.6);opacity:0} to{transform:scale(1);opacity:1} }
+
+.mc-info h4   { font-size:0.9rem; font-weight:700; color:var(--text-primary); }
+.mc-info span { font-size:0.75rem; color:var(--text-muted); }
+
+/* animated match badge */
+.mc-match-badge {
+  margin-left:auto;
+  background:rgba(0,229,200,0.10); border:1px solid rgba(0,229,200,0.28); color:var(--accent3);
+  border-radius:20px; padding:0.22rem 0.65rem; font-size:0.7rem; font-weight:700; flex-shrink:0;
+  animation: badgePulse 2.5s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%,100% { box-shadow:0 0 0 0 rgba(0,229,200,0.3); }
+  50%      { box-shadow:0 0 0 5px rgba(0,229,200,0.03); }
+}
+
+/* score bar */
+.mc-score-bar {
+  height:3px; border-radius:2px;
+  background:rgba(255,255,255,0.06);
+  margin-bottom:1rem; overflow:hidden;
+  position:relative; z-index:1;
+}
+.mc-score-fill {
+  height:100%; border-radius:2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  animation: fillBar 1s ease both;
+  animation-delay: inherit;
+}
+@keyframes fillBar { from{width:0 !important} }
+
+.mc-skills { margin-bottom:0.85rem; position:relative; z-index:1; }
+.mc-skills-lbl { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); margin-bottom:0.4rem; }
+
+.mc-footer {
+  display:flex; align-items:center; justify-content:space-between; margin-top:0.9rem;
+  padding-top:0.85rem; border-top:1px solid var(--border);
+  position:relative; z-index:1;
+}
+.mc-rep { font-size:0.8rem; color:var(--gold); font-weight:700; text-shadow:0 0 8px rgba(255,197,66,0.03); }
+.mc-btns { display:flex; gap:0.4rem; }
+
+/* ── REQUESTS ── */
+.req-head-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:1.25rem; }
+.req-tab-btn {
+  padding:0.6rem 1.25rem; font-size:0.82rem; font-weight:700;
+  color:var(--text-muted); cursor:pointer; border:none; background:transparent;
+  border-bottom:2px solid transparent; margin-bottom:-1px;
+  font-family:'Plus Jakarta Sans',sans-serif; transition:var(--transition);
+}
+.req-tab-btn:hover { color:var(--text-primary); }
+.req-tab-btn.active { color:var(--accent3); border-bottom-color:var(--accent3); }
+.req-count { background:rgba(255,197,66,0.16); color:var(--gold); border-radius:10px; padding:0.05rem 0.5rem; font-size:0.72rem; margin-left:0.35rem; font-weight:700; }
+.req-list { display:grid; gap:0.85rem; }
+.req-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:13px; padding:1.1rem;
+  display:flex; align-items:center; gap:0.9rem;
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.35s ease, border-color 0.25s ease, background-image 0.25s ease;
+  backdrop-filter:blur(12px); will-change: transform, box-shadow;
+}
+.req-card:hover {
+  border-color: transparent;
+  box-shadow:
+    0 4px 11px rgba(0,0,0,0.095),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 12px rgba(123,111,255,0.02);
+  transform: translateY(-2px);
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, rgba(123,111,255,0.55), rgba(0,229,200,0.35));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.req-body { flex:1; }
+.req-body h4 { font-size:0.87rem; font-weight:700; color:var(--text-primary); }
+.req-body p  { font-size:0.75rem; color:var(--text-muted); margin-top:0.15rem; }
+.req-acts { display:flex; gap:0.4rem; flex-shrink:0; }
+
+/* empty state */
+.empty-state { text-align:center; padding:3rem 1rem; color:var(--text-muted); }
+.empty-state .ei { font-size:2.5rem; margin-bottom:0.75rem; }
+.empty-state p   { font-size:0.88rem; }
+
+/* ══════════════════════════════════════════
+   TRACKER
+══════════════════════════════════════════ */
+.tracker-layout { display:grid; grid-template-columns:1fr 330px; gap:1.5rem; }
+.hist-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:1.25rem; margin-bottom:0.85rem;
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.35s ease, border-color 0.25s ease, background-image 0.25s ease;
+  backdrop-filter:blur(12px); will-change: transform, box-shadow;
+}
+.hist-card:hover {
+  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.1),
+    0 0 0 1px rgba(123,111,255,0.15),
+    0 0 14px rgba(123,111,255,0.02),
+    0 0 30px rgba(123,111,255,0.02);
+  background-image: linear-gradient(var(--card), var(--card)),
+                    linear-gradient(135deg, rgba(123,111,255,0.55), rgba(0,229,200,0.38));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.hist-head { display:flex; align-items:center; gap:0.9rem; margin-bottom:0.75rem; }
+.hist-icon { font-size:1.6rem; flex-shrink:0; }
+.hist-info { flex:1; }
+.hist-info h4 { font-size:0.88rem; font-weight:700; color:var(--text-primary); }
+.hist-info p  { font-size:0.75rem; color:var(--text-muted); }
+.hist-pts { background:rgba(255,197,66,0.16); color:var(--gold); border-radius:20px; padding:0.25rem 0.7rem; font-size:0.76rem; font-weight:700; border:1px solid rgba(255,197,66,0.3); box-shadow:0 0 10px rgba(255,197,66,0.02); }
+.prog-bar { height:4px; background:rgba(255,255,255,0.06); border-radius:3px; margin-top:0.6rem; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:linear-gradient(90deg, var(--accent), var(--accent3)); transition:width 0.9s ease; }
+.prog-lbl { display:flex; justify-content:space-between; font-size:0.73rem; color:var(--text-muted); margin-top:0.3rem; }
+.stat-row { margin-bottom:0.9rem; }
+.stat-lbl { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.35rem; font-weight:500; }
+.stat-lbl span:last-child { color:var(--accent3); font-weight:700; }
+.lb-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:1.5rem;
+  position:sticky; top:80px; backdrop-filter:blur(18px);
+  overflow:hidden;
+}
+.lb-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--accent), var(--accent3), var(--gold));
+}
+.lb-card h3 { font-size:0.95rem; font-weight:800; color:var(--text-primary); margin-bottom:1rem; }
+.lb-item { display:flex; align-items:center; gap:0.7rem; padding:0.7rem 0; border-bottom:1px solid var(--border); transition:var(--transition); }
+.lb-item:last-child { border-bottom:none; }
+.lb-item:hover { padding-left:4px; }
+.lb-rank { font-family:'Syne',sans-serif; font-size:0.95rem; font-weight:800; width:22px; text-align:center; flex-shrink:0; }
+.rank-g { color:#ffd700; text-shadow:0 0 10px rgba(255,215,0,0.02); }
+.rank-s { color:#c0c0c0; }
+.rank-b { color:#cd7f32; }
+.lb-av { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:800; color:#fff; flex-shrink:0; }
+.lb-info { flex:1; min-width:0; }
+.lb-info h4 { font-size:0.82rem; font-weight:700; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.lb-info span { font-size:0.7rem; color:var(--text-muted); }
+.lb-pts { font-family:'Syne',sans-serif; font-weight:800; color:var(--gold); font-size:0.88rem; flex-shrink:0; text-shadow:0 0 10px rgba(255,197,66,0.02); }
+
+/* ══════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════ */
+.overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,0.70);
+  backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  z-index:800; opacity:0; pointer-events:none; transition:opacity 0.2s;
+}
+.overlay.open { opacity:1; pointer-events:all; }
+.modal-box {
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:20px; padding:2rem; max-width:460px; width:90%;
+  transform:translateY(24px) scale(0.97);
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative; backdrop-filter:blur(24px);
+  box-shadow:var(--shadow);
+}
+.modal-box::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,229,200,0.3),transparent);
+}
+.overlay.open .modal-box { transform:translateY(0) scale(1); }
+.modal-box h3 { font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:1.25rem; }
+.modal-close {
+  position:absolute; top:1rem; right:1rem;
+  background:rgba(255,255,255,0.05); border:1px solid var(--border);
+  border-radius:8px; width:32px; height:32px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem; cursor:pointer; color:var(--text-muted);
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.modal-close:hover { border-color:var(--accent2); color:var(--accent2); transform:scale(1.12) rotate(90deg); }
+.modal-foot { display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.5rem; }
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+.toast {
+  position:fixed; bottom:2rem; right:2rem; z-index:900;
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:14px; padding:0.9rem 1.4rem;
+  display:flex; align-items:center; gap:0.7rem;
+  box-shadow:var(--shadow); max-width:320px;
+  transform:translateY(80px) scale(0.9); opacity:0;
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events:none; backdrop-filter:blur(18px);
+}
+.toast.show { transform:translateY(0) scale(1); opacity:1; }
+.toast-ico { font-size:1.15rem; }
+.toast-msg { font-size:0.85rem; font-weight:600; color:var(--text-primary); }
+
+/* ══════════════════════════════════════════
+   CHAT
+══════════════════════════════════════════ */
+.msg-mine   { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border-radius:16px 16px 4px 16px; align-self:flex-end; max-width:75%; padding:9px 13px; font-size:0.84rem; line-height:1.5; word-break:break-word; box-shadow:0 4px 14px var(--accent-glow); }
+.msg-theirs { background:var(--card2); color:var(--text-primary); border:1px solid var(--border); border-radius:16px 16px 16px 4px; align-self:flex-start; max-width:75%; padding:9px 13px; font-size:0.84rem; line-height:1.5; word-break:break-word; backdrop-filter:blur(8px); }
+.msg-meta   { font-size:0.67rem; opacity:.55; margin-top:3px; }
+.msg-mine .msg-meta { text-align:right; }
+.chat-empty { text-align:center; color:var(--text-faint); font-size:0.83rem; padding:30px 15px; }
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeDown    { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp      { from{opacity:0;transform:translateY(16px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes slideInRight{ from{transform:translateX(100%)} to{transform:translateX(0)} }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:860px) {
+  .dash-layout { grid-template-columns:1fr; }
+  .tracker-layout { grid-template-columns:1fr; }
+  .profile-sidebar, .lb-card { position:static; }
+  nav { padding:0 1rem; }
+  .nav-center { display:none; }
+  .mobile-nav {
+    display:flex; position:fixed; bottom:0; left:0; right:0;
+    background:var(--nav-bg); border-top:1px solid var(--border);
+    backdrop-filter:blur(16px); z-index:500; padding:0.5rem 0;
+  }
+  .mob-tab {
+    flex:1; display:flex; flex-direction:column; align-items:center;
+    gap:0.2rem; padding:0.4rem;
+    font-size:0.62rem; font-weight:700; color:var(--text-muted);
+    cursor:pointer; transition:var(--transition); border:none; background:transparent;
+    font-family:'Plus Jakarta Sans',sans-serif;
+  }
+  .mob-tab .mi { font-size:1.1rem; }
+  .mob-tab.active { color:var(--accent3); }
+  body { padding-bottom:60px; }
+}
+@media(min-width:861px) { .mobile-nav { display:none; } }
+</style>
+
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <div class="brand-text">Skill<em>Swap</em></div>
+
+  <div class="nav-center" id="nav-center">
+    <button class="nav-tab active" id="ntab-home"       onclick="go('home')">🏠 Home</button>
+    <button class="nav-tab" id="ntab-auth"              onclick="go('auth')">🔐 Login</button>
+    <button class="nav-tab" id="ntab-dashboard" style="display:none" onclick="go('dashboard')">📊 Dashboard</button>
+    <button class="nav-tab" id="ntab-matching"  style="display:none" onclick="go('matching')">🔍 Find Matches</button>
+    <button class="nav-tab" id="ntab-tracker"   style="display:none" onclick="go('tracker')">📈 Tracker</button>
+  </div>
+
+  <div class="nav-right">
+    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+      <span id="theme-icon">🌙</span>
+    </div>
+    <div id="nav-user-area">
+      <button class="btn btn-ghost btn-sm" onclick="go('auth')" style="font-size:0.8rem">Login</button>
+      <button class="btn btn-primary btn-sm" onclick="go('auth')" style="margin-left:0.4rem;font-size:0.8rem">Sign Up</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== MOBILE NAV ===== -->
+<div class="mobile-nav" id="mob-nav">
+  <button class="mob-tab active" id="mtab-home"      onclick="go('home')"><span class="mi">🏠</span>Home</button>
+  <button class="mob-tab"        id="mtab-auth"      onclick="go('auth')"><span class="mi">🔐</span>Login</button>
+  <button class="mob-tab" style="display:none" id="mtab-dashboard" onclick="go('dashboard')"><span class="mi">📊</span>Dash</button>
+  <button class="mob-tab" style="display:none" id="mtab-matching"  onclick="go('matching')"><span class="mi">🔍</span>Match</button>
+  <button class="mob-tab" style="display:none" id="mtab-tracker"   onclick="go('tracker')"><span class="mi">📈</span>Tracker</button>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">
+  <span class="toast-ico" id="t-ico">✅</span>
+  <span class="toast-msg" id="t-msg"></span>
+</div>
+
+<!-- ===== OVERLAYS ===== -->
+
+<!-- Edit Profile Modal -->
+<div class="overlay" id="edit-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeOverlay('edit-overlay')">✕</button>
+    <h3>✏️ Edit Profile & Skills</h3>
+    <div class="form-group">
+      <label>Skills I Can Teach <span style="color:var(--text-faint)">(comma separated)</span></label>
+      <input class="form-control" id="ed-teach" placeholder="Python, Music, Photography…">
+    </div>
+    <div class="form-group">
+      <label>Skills I Want to Learn <span style="color:var(--text-faint)">(comma separated)</span></label>
+      <input class="form-control" id="ed-want" placeholder="Design, Guitar, Editing…">
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeOverlay('edit-overlay')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Request Modal -->
+<div class="overlay" id="req-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeOverlay('req-overlay')">✕</button>
+    <h3>🚀 Send Exchange Request</h3>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem">Requesting exchange with <strong id="req-target" style="color:var(--text-primary)"></strong></p>
+    <div class="form-group">
+      <label>Skill you'll teach them</label>
+      <select class="form-control" id="req-teach"></select>
+    </div>
+    <div class="form-group">
+      <label>Skill you want to learn</label>
+      <select class="form-control" id="req-want"></select>
+    </div>
+    <div class="form-group">
+      <label>Message (optional)</label>
+      <input class="form-control" id="req-msg" placeholder="Hey! I'd love to exchange skills with you…">
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeOverlay('req-overlay')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="sendRequest()">Send Request 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     SCREEN 1 — LANDING
+=================================================== -->
+<div id="s-home" class="screen active">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    <div class="hero-glow glow-3"></div>
+    <div class="float-chips">
+      <div class="chip">💻 Coding</div>
+      <div class="chip">🎨 UI Design</div>
+      <div class="chip">🎸 Guitar</div>
+      <div class="chip">📹 Video Editing</div>
+      <div class="chip">🗣️ Public Speaking</div>
+      <div class="chip">📸 Photography</div>
+    </div>
+
+    <div class="hero-pill">🎓 Campus Skill Exchange Network</div>
+    <h1>Exchange <span class="grad-text">Skills,</span><br>Not Money</h1>
+    <p>List what you know. Request what you want. Get matched with students who complement your skills — zero cost, pure collaboration.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="go('auth')">Get Started Free →</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it Works</button>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="how">
+    <div class="section-header">
+      <h2>How SkillSwap Works</h2>
+      <p>Three steps to start your skill exchange journey</p>
+    </div>
+    <div class="steps-row">
+      <div class="step-card">
+        <div class="step-bg-num">01</div>
+        <div class="step-icon">📝</div>
+        <h3>List Your Skills</h3>
+        <p>Tell the platform what you can teach and what you want to learn — coding, dance, editing, music, anything.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-bg-num">02</div>
+        <div class="step-icon">⚡</div>
+        <h3>Get Matched</h3>
+        <p>Our matching engine compares skill entries and finds students who need what you have — and have what you need.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-bg-num">03</div>
+        <div class="step-icon">🏆</div>
+        <h3>Exchange & Earn</h3>
+        <p>Complete exchanges, track your progress, and earn reputation points that build your campus standing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section benefits-bg" id="benefits">
+    <div class="section-header">
+      <h2>Why SkillSwap?</h2>
+      <p>Skills are the new currency on campus</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card"><div class="bi">🤝</div><h4>Peer Learning</h4><p>Learn from fellow students who get your level</p></div>
+      <div class="benefit-card"><div class="bi">💸</div><h4>Zero Cost</h4><p>No money — skills are the only currency here</p></div>
+      <div class="benefit-card"><div class="bi">🌐</div><h4>Build Network</h4><p>Connect across departments and years</p></div>
+      <div class="benefit-card"><div class="bi">⭐</div><h4>Earn Points</h4><p>Gain reputation for every completed exchange</p></div>
+      <div class="benefit-card"><div class="bi">🔒</div><h4>Campus Only</h4><p>A safe, trusted student-only platform</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Ready to Start Swapping?</h2>
+    <p>Join hundreds of students already exchanging skills on campus</p>
+    <button class="btn btn-primary" style="font-size:1rem;padding:0.8rem 2.25rem" onclick="go('auth')">Join SkillSwap Today →</button>
+  </div>
+
+  <footer>
+    <p>© 2025 <strong>SkillSwap</strong> — Campus Skill Exchange Network Hub &nbsp;|&nbsp; Exchange Skills, Not Money 🎓</p>
+  </footer>
+</div>
+
+<!-- ===================================================
+     SCREEN 2 — AUTH (Google Sign-In)
+=================================================== -->
+<div id="s-auth" class="screen">
+  <div class="auth-wrap">
+    <div class="auth-top">
+      <div class="brand-text">Skill<em>Swap</em></div>
+      <p>Exchange Skills, Not Money</p>
+    </div>
+
+    <!-- Step 1: Google Sign-In -->
+    <div id="auth-step-1">
+      <p style="text-align:center;font-size:0.88rem;color:var(--text-muted);margin-bottom:1.5rem">
+        Sign in with your Google account to join the campus skill exchange network.
+      </p>
+      <button class="auth-submit" id="google-signin-btn" onclick="signInWithGoogle()" style="display:flex;align-items:center;justify-content:center;gap:0.6rem">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+      <div id="auth-loading" style="display:none;text-align:center;margin-top:1rem;color:var(--text-muted);font-size:0.85rem">
+        ⏳ Signing you in…
+      </div>
+    </div>
+
+    <!-- Step 2: Complete profile (first time only) -->
+    <div id="auth-step-2" style="display:none">
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.4rem">One last step! 🎓</h3>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem">Tell us about your skills so we can find your matches.</p>
+      <div class="form-group">
+        <label>Department</label>
+        <select class="form-control" id="s-dept">
+          <option value="">Select your department</option>
+          <option>Computer Science</option>
+          <option>Information Technology</option>
+          <option>Electronics &amp; Communication</option>
+          <option>Mechanical Engineering</option>
+          <option>Business Administration</option>
+          <option>Arts &amp; Design</option>
+          <option>Biotechnology</option>
+          <option>Mathematics &amp; Statistics</option>
+        </select>
+        <div class="form-error" id="s-dept-e">Please select a department</div>
+      </div>
+      <div class="form-group">
+        <label>Skills I Can Teach <span style="color:var(--text-faint)">(comma separated)</span></label>
+        <input class="form-control" id="s-teach" placeholder="Python, Music, Photography…">
+        <div class="form-error" id="s-teach-e">Add at least one skill you can teach</div>
+      </div>
+      <div class="form-group">
+        <label>Skills I Want to Learn <span style="color:var(--text-faint)">(comma separated)</span></label>
+        <input class="form-control" id="s-want" placeholder="Design, Guitar, Editing…">
+        <div class="form-error" id="s-want-e">Add at least one skill you want to learn</div>
+      </div>
+      <button class="auth-submit" onclick="completeProfile()">Complete My Profile 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     SCREEN 3 — DASHBOARD
+=================================================== -->
+<div id="s-dashboard" class="screen">
+  <div class="page">
+    <div class="page-head">
+      <h2>Dashboard</h2>
+      <p>Welcome back, <span id="d-greeting" style="color:var(--accent);font-weight:700">Student</span>! Here's your skill exchange overview.</p>
+    </div>
+
+    <div class="dash-layout">
+      <!-- PROFILE SIDEBAR -->
+      <div>
+        <div class="profile-sidebar">
+          <div class="av-lg" id="d-av">S</div>
+          <div class="p-name" id="d-name">Student Name</div>
+          <div class="p-dept" id="d-dept">Department</div>
+
+          <div class="rep-box">
+            <div class="rep-val" id="d-rep">120</div>
+            <div class="rep-lbl">⭐ Reputation Points</div>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-block-lbl">Skills I Teach</div>
+            <div class="tag-wrap" id="d-teach-tags"></div>
+          </div>
+          <div class="skill-block">
+            <div class="skill-block-lbl">Skills I Want</div>
+            <div class="tag-wrap" id="d-want-tags"></div>
+          </div>
+
+          <button class="edit-profile-btn" onclick="openEditModal()">✏️ Edit Profile & Skills</button>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div>
+        <!-- Stats -->
+        <div class="ov-row">
+          <div class="ov-card">
+            <div class="ov-num" id="d-matches">0</div>
+            <div class="ov-lbl">Skill Matches Found</div>
+          </div>
+          <div class="ov-card">
+            <div class="ov-num" id="d-ongoing">0</div>
+            <div class="ov-lbl">Ongoing Exchanges</div>
+          </div>
+          <div class="ov-card">
+            <div class="ov-num" id="d-completed">0</div>
+            <div class="ov-lbl">Completed</div>
+          </div>
+        </div>
+
+        <!-- Activity — real data only -->
+        <div class="section-card">
+          <h3>Recent Activity</h3>
+          <div id="d-activity-feed"></div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="section-card">
+          <h3>Quick Actions</h3>
+          <div class="quick-btns">
+            <button class="btn btn-primary btn-sm" onclick="go('matching')">🔍 Find Matches</button>
+            <button class="btn btn-ghost btn-sm" onclick="go('tracker')">📈 View Tracker</button>
+            <button class="btn btn-ghost btn-sm" onclick="openEditModal()">✏️ Update Skills</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     SCREEN 4 — MATCHING
+=================================================== -->
+<div id="s-matching" class="screen">
+  <div class="page">
+    <div class="page-head">
+      <h2>Skill Matching</h2>
+      <p>Find students who match your skill exchange needs</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-row">
+      <input class="form-control" type="text" id="m-search" placeholder="🔍 Search by name or skill…" oninput="renderMatches()" style="max-width:280px">
+      <select class="form-control" id="m-dept" onchange="renderMatches()" style="max-width:220px">
+        <option value="">All Departments</option>
+        <option>Computer Science</option>
+        <option>Information Technology</option>
+        <option>Arts & Design</option>
+        <option>Business Administration</option>
+        <option>Electronics & Communication</option>
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="renderMatches()">⚡ Find My Matches</button>
+    </div>
+
+    <!-- Match cards -->
+    <div class="match-grid" id="match-grid"></div>
+
+    <!-- Requests -->
+    <div class="section-card">
+      <h3>Exchange Requests</h3>
+      <div class="req-head-tabs">
+        <button class="req-tab-btn active" onclick="setReqTab(this,'pending')">
+          Pending <span class="req-count" id="pcount">2</span>
+        </button>
+        <button class="req-tab-btn" onclick="setReqTab(this,'accepted')">Accepted</button>
+        <button class="req-tab-btn" onclick="setReqTab(this,'completed')">Completed</button>
+      </div>
+      <div class="req-list" id="req-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+     SCREEN 5 — TRACKER
+=================================================== -->
+<div id="s-tracker" class="screen">
+  <div class="page">
+    <div class="page-head">
+      <h2>Collaboration Tracker</h2>
+      <p>Your learning history, reputation growth, and campus leaderboard</p>
+    </div>
+
+    <div class="tracker-layout">
+      <!-- LEFT -->
+      <div>
+        <!-- Rep growth — real data -->
+        <div class="section-card">
+          <h3>📊 Reputation Breakdown</h3>
+          <div id="rep-breakdown">
+            <div class="empty-state" style="padding:1.5rem"><div class="ei">📊</div><p>Complete exchanges to see your reputation breakdown.</p></div>
+          </div>
+        </div>
+
+        <!-- Exchange History — real data only -->
+        <div class="section-card">
+          <h3>📋 Exchange History</h3>
+          <div id="hist-list"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT — Leaderboard -->
+      <div>
+        <div class="lb-card">
+          <h3>🏆 Campus Leaderboard</h3>
+          <div id="lb-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHAT OVERLAY ═══ -->
+<div id="chat-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:900;display:none;justify-content:flex-end;backdrop-filter:blur(3px)">
+  <div id="chat-panel" style="width:360px;height:100vh;background:var(--card);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.3);animation:slideInRight .3s ease">
+    <div style="padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--card2)">
+      <div id="chat-av" style="width:38px;height:38px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:0.9rem;flex-shrink:0">?</div>
+      <div style="flex:1">
+        <div id="chat-name" style="font-size:0.92rem;font-weight:700;color:var(--text-primary)">Partner</div>
+        <div id="chat-skill" style="font-size:0.72rem;color:var(--text-muted)">Exchange</div>
+      </div>
+      <button onclick="openVideoCall()" style="padding:6px 12px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit">📹 Call</button>
+      <button onclick="closeChat()" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
+      <div style="text-align:center;color:var(--text-faint);font-size:0.82rem;padding:20px">Loading messages…</div>
+    </div>
+    <div style="padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end;background:var(--card2)">
+      <textarea id="chat-input" placeholder="Type a message… (Enter to send)" rows="1"
+        style="flex:1;border:1px solid var(--border);border-radius:10px;padding:9px 13px;font-family:inherit;font-size:0.86rem;color:var(--text-primary);background:var(--card);outline:none;resize:none;max-height:90px;line-height:1.5;transition:border-color .2s"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
+        oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+      <button onclick="sendChatMessage()" style="width:40px;height:40px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:1rem;cursor:pointer;flex-shrink:0;transition:all .2s">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VIDEO CALL OVERLAY ═══ -->
+<div id="video-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:950;display:none;flex-direction:column;align-items:center;justify-content:center">
+  <div style="width:100%;max-width:940px;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;color:white">
+    <div>
+      <div id="video-title" style="font-size:0.95rem;font-weight:700">Video Call</div>
+      <div style="font-size:0.72rem;opacity:.6;margin-top:2px">Your partner needs to click "📹 Call" on the same exchange to join</div>
+    </div>
+    <button onclick="closeVideoCall()" style="padding:7px 18px;border-radius:9px;border:1px solid rgba(255,255,255,0.25);background:transparent;color:white;font-family:inherit;font-size:0.83rem;font-weight:600;cursor:pointer">✕ End Call</button>
+  </div>
+  <iframe id="video-frame" style="width:100%;max-width:940px;height:540px;border-radius:14px;border:none;background:#000"
+    allow="camera;microphone;fullscreen;display-capture"></iframe>
+  <p style="color:rgba(255,255,255,0.45);font-size:0.73rem;margin-top:10px;text-align:center">Powered by Jitsi Meet — free, open source, no account needed</p>
+</div>
+
+
+<!-- ═══ FIREBASE SDKs (CDN) ═══ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<!-- ===================================================
+     JAVASCRIPT
+=================================================== -->
+<script>
+// ══════════════════════════════════════════════════════════════════
+// FIREBASE CONFIG — your project credentials
+// ══════════════════════════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey:            "AIzaSyAw3guFDNRm5FU4bJntmgZcWXP3IiiSFSg",
+  authDomain:        "skillswap-8eaf3.firebaseapp.com",
+  projectId:         "skillswap-8eaf3",
+  storageBucket:     "skillswap-8eaf3.firebasestorage.app",
+  messagingSenderId: "562780122710",
+  appId:             "1:562780122710:web:83c778d8d00701e91f55f7"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
+
+// ══════════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════════
+let user        = null;   // current Firebase user + Firestore profile
+let curScreen   = 'home';
+let reqTabState = 'pending';
+let reqTargetId = null;
+let REQUESTS    = { pending:[], accepted:[], completed:[] };
+let allUsers    = [];     // fetched from Firestore, used for matching
+let chatUnsub   = null;   // Firebase listener for active chat
+let activeChatId = null;  // uid of person we are chatting with
+
+// ══════════════════════════════════════════════════════════════════
+// FIREBASE AUTH — Google Sign-In
+// ══════════════════════════════════════════════════════════════════
+
+/*
+  auth.onAuthStateChanged fires every time the user's login state changes:
+  - When the page loads (checks if still logged in from before)
+  - After successful Google sign-in
+  - After logout
+  This is the single source of truth for whether someone is logged in.
+*/
+auth.onAuthStateChanged(async (firebaseUser) => {
+  if (firebaseUser) {
+    // User is logged in — load their Firestore profile
+    await loadOrCreateUserProfile(firebaseUser);
+  } else {
+    // Not logged in
+    user = null;
+    updateNavForLogout();
+  }
+});
+
+async function signInWithGoogle() {
+  document.getElementById('google-signin-btn').style.display = 'none';
+  document.getElementById('auth-loading').style.display      = 'block';
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    // Opens the Google sign-in popup
+    await auth.signInWithPopup(provider);
+    // onAuthStateChanged above handles the rest automatically
+  } catch (err) {
+    console.error('Sign-in failed:', err);
+    document.getElementById('google-signin-btn').style.display = 'flex';
+    document.getElementById('auth-loading').style.display      = 'none';
+    toast('❌', 'Sign-in failed. Please try again.');
+  }
+}
+
+/*
+  When a user signs in for the first time, we create their profile in Firestore.
+  If they have signed in before, we just load their existing profile.
+  If they exist but haven't set up skills yet (dept is empty), show step 2.
+*/
+async function loadOrCreateUserProfile(firebaseUser) {
+  const ref = db.collection('users').doc(firebaseUser.uid);
+  const snap = await ref.get();
+
+  if (!snap.exists) {
+    // First time — create a basic profile, ask for dept + skills next
+    const newProfile = {
+      uid:            firebaseUser.uid,
+      name:           firebaseUser.displayName || 'Student',
+      email:          firebaseUser.email,
+      profilePicture: firebaseUser.photoURL || '',
+      dept:           '',
+      skillsOffered:  [],
+      skillsWanted:   [],
+      rep:            0,
+      createdAt:      firebase.firestore.FieldValue.serverTimestamp()
+    };
+    await ref.set(newProfile);
+    user = newProfile;
+    // Show the profile setup step
+    document.getElementById('auth-step-1').style.display = 'none';
+    document.getElementById('auth-step-2').style.display = 'block';
+    return;
+  }
+
+  // Existing user
+  user = { uid: firebaseUser.uid, ...snap.data() };
+
+  if (!user.dept) {
+    // Signed in before but never completed profile
+    document.getElementById('auth-step-1').style.display = 'none';
+    document.getElementById('auth-step-2').style.display = 'block';
+    return;
+  }
+
+  // Fully set up — go to dashboard
+  afterLogin();
+}
+
+/*
+  Called when new user fills in dept + skills for the first time.
+  Saves to Firestore then proceeds to dashboard.
+*/
+async function completeProfile() {
+  const dept  = document.getElementById('s-dept').value;
+  const teach = document.getElementById('s-teach').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const want  = document.getElementById('s-want').value.split(',').map(s=>s.trim()).filter(Boolean);
+  let ok = true;
+  if (!dept)         { show('s-dept-e');  ok=false; } else hide('s-dept-e');
+  if (!teach.length) { show('s-teach-e'); ok=false; } else hide('s-teach-e');
+  if (!want.length)  { show('s-want-e');  ok=false; } else hide('s-want-e');
+  if (!ok) return;
+
+  await db.collection('users').doc(user.uid).update({
+    dept, skillsOffered: teach, skillsWanted: want
+  });
+  user.dept          = dept;
+  user.skillsOffered = teach;
+  user.skillsWanted  = want;
+  afterLogin();
+}
+
+function afterLogin() {
+  // Show protected nav tabs
+  ['dashboard','matching','tracker'].forEach(n => {
+    document.getElementById('ntab-'+n).style.display = 'block';
+    const m = document.getElementById('mtab-'+n); if(m) m.style.display = 'flex';
+  });
+  document.getElementById('ntab-auth').style.display = 'none';
+  const ma = document.getElementById('mtab-auth'); if(ma) ma.style.display = 'none';
+
+  // Show user chip in navbar — use Google profile photo if available
+  const photoHTML = user.profilePicture
+    ? `<img src="${user.profilePicture}" style="width:26px;height:26px;border-radius:50%;object-fit:cover" alt="${user.name}">`
+    : `<div class="mini-av">${(user.name||'S')[0]}</div>`;
+
+  document.getElementById('nav-user-area').innerHTML = `
+    <div class="nav-user-chip">${photoHTML} ${(user.name||'Student').split(' ')[0]}</div>
+    <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="font-size:0.78rem;margin-left:0.4rem">Logout</button>
+  `;
+
+  // Load all users from Firestore for matching
+  fetchAllUsers();
+
+  toast('🎉', 'Welcome, '+(user.name||'Student').split(' ')[0]+'!');
+  go('dashboard');
+}
+
+function doLogout() {
+  auth.signOut();
+  // onAuthStateChanged handles the rest
+  user = null; allUsers = []; REQUESTS = { pending:[], accepted:[], completed:[] };
+  updateNavForLogout();
+  toast('👋','Logged out successfully');
+  go('home');
+}
+
+function updateNavForLogout() {
+  ['dashboard','matching','tracker'].forEach(n => {
+    document.getElementById('ntab-'+n).style.display = 'none';
+    const m = document.getElementById('mtab-'+n); if(m) m.style.display = 'none';
+  });
+  document.getElementById('ntab-auth').style.display = 'block';
+  const ma = document.getElementById('mtab-auth'); if(ma) ma.style.display = 'flex';
+  document.getElementById('nav-user-area').innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="go('auth')" style="font-size:0.8rem">Login</button>
+    <button class="btn btn-primary btn-sm" onclick="go('auth')" style="margin-left:0.4rem;font-size:0.8rem">Sign Up</button>
+  `;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// FIRESTORE — fetch real users for matching
+// ══════════════════════════════════════════════════════════════════
+async function fetchAllUsers() {
+  try {
+    const snap = await db.collection('users').get();
+    allUsers = snap.docs
+      .map(d => d.data())
+      .filter(u => u.uid !== user.uid && u.dept); // exclude self + incomplete profiles
+    // After fetching, update match count on dashboard
+    if (curScreen === 'dashboard') renderDash();
+  } catch(e) {
+    console.error('fetchAllUsers failed:', e);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// THEME
+// ══════════════════════════════════════════════════════════════════
+// Load saved theme on startup
+(function() {
+  const saved = localStorage.getItem('skillswap_theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    const ic = document.getElementById('theme-icon');
+    if (ic) ic.textContent = saved === 'dark' ? '🌙' : '☀️';
+  }
+})();
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('skillswap_theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+}
+
+// ══════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════════════
+const SCREENS = ['home','auth','dashboard','matching','tracker'];
+
+function go(name) {
+  if (['dashboard','matching','tracker'].includes(name) && !user) {
+    toast('⚠️','Please login first!'); go('auth'); return;
+  }
+  SCREENS.forEach(s => document.getElementById('s-'+s).classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  curScreen = name;
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const nt = document.getElementById('ntab-'+name); if(nt) nt.classList.add('active');
+  document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('active'));
+  const mt = document.getElementById('mtab-'+name); if(mt) mt.classList.add('active');
+  if (name === 'dashboard') renderDash();
+  if (name === 'matching')  { renderMatches(); renderReqs(); }
+  if (name === 'tracker')   renderTracker();
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════════════════════════
+function computeStats() {
+  const ongoing   = REQUESTS.accepted.length;
+  const completed = REQUESTS.completed.length;
+  const rep       = (completed * 30) + (REQUESTS.accepted.length * 10);
+  return { ongoing, completed, rep };
+}
+
+function renderDash() {
+  if (!user) return;
+  const stats = computeStats();
+
+  document.getElementById('d-greeting').textContent = (user.name||'Student').split(' ')[0];
+  document.getElementById('d-name').textContent      = user.name || 'Student';
+  document.getElementById('d-dept').textContent      = user.dept || 'Set up your profile';
+  document.getElementById('d-rep').textContent       = stats.rep;
+  document.getElementById('d-matches').textContent   = allUsers.length;
+  document.getElementById('d-ongoing').textContent   = stats.ongoing;
+  document.getElementById('d-completed').textContent = stats.completed;
+
+  // Show profile photo or initials
+  const avEl = document.getElementById('d-av');
+  if (user.profilePicture) {
+    avEl.innerHTML = `<img src="${user.profilePicture}" style="width:100%;height:100%;border-radius:50%;object-fit:cover" alt="${user.name}">`;
+    avEl.style.fontSize = '0';
+  } else {
+    avEl.textContent = (user.name||'S')[0];
+    avEl.style.fontSize = '';
+  }
+
+  document.getElementById('d-teach-tags').innerHTML =
+    (user.skillsOffered||[]).map(s=>`<span class="tag tag-teach">${s}</span>`).join('') || '<span style="color:var(--text-faint);font-size:0.8rem">No skills added yet</span>';
+  document.getElementById('d-want-tags').innerHTML =
+    (user.skillsWanted||[]).map(s=>`<span class="tag tag-want">${s}</span>`).join('') || '<span style="color:var(--text-faint);font-size:0.8rem">No skills added yet</span>';
+
+  // Activity feed
+  const feed = document.getElementById('d-activity-feed');
+  const allActivity = [
+    ...REQUESTS.completed.map(r=>({ type:'completed', r })),
+    ...REQUESTS.accepted.map(r=>({ type:'accepted',  r })),
+    ...REQUESTS.pending.map(r=>({ type:'pending',    r })),
+  ];
+  if (!allActivity.length) {
+    feed.innerHTML = `<div class="empty-state" style="padding:1.5rem 0"><div class="ei">🌱</div><p>No activity yet. Go to <strong>Find Matches</strong> to send your first request!</p></div>`;
+    return;
+  }
+  feed.innerHTML = allActivity.slice(0,6).map(({ type, r }) => {
+    const cfg = {
+      completed: { icon:'✅', cls:'ai-green', label:`<span class="badge badge-done">Done</span>`,      verb:'Completed exchange with' },
+      accepted:  { icon:'🤝', cls:'ai-blue',  label:`<span class="badge badge-active">Ongoing</span>`, verb:'Ongoing exchange with'   },
+      pending:   { icon:'📨', cls:'ai-pink',  label:`<span class="badge badge-pending">Pending</span>`,verb:'Pending request to'       },
+    }[type];
+    return `<div class="act-item"><div class="act-icon ${cfg.cls}">${cfg.icon}</div>
+      <div class="act-body"><strong>${cfg.verb} ${r.name}</strong>
+      <span>You teach <em>${r.want}</em> · They teach <em>${r.teach}</em></span></div>${cfg.label}</div>`;
+  }).join('');
+}
+
+function openEditModal() {
+  if (!user) return;
+  document.getElementById('ed-teach').value = (user.skillsOffered||[]).join(', ');
+  document.getElementById('ed-want').value  = (user.skillsWanted||[]).join(', ');
+  openOverlay('edit-overlay');
+}
+
+async function saveProfile() {
+  const t = document.getElementById('ed-teach').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const w = document.getElementById('ed-want').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if (!t.length || !w.length) { toast('⚠️','Add at least one skill in each field'); return; }
+  // Save to Firestore so all users see updated skills
+  await db.collection('users').doc(user.uid).update({ skillsOffered:t, skillsWanted:w });
+  user.skillsOffered = t; user.skillsWanted = w;
+  closeOverlay('edit-overlay');
+  renderDash();
+  toast('✅','Profile updated!');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// MATCHING — uses real Firestore users, no static data
+// ══════════════════════════════════════════════════════════════════
+function renderMatches() {
+  const q    = (document.getElementById('m-search')?.value||'').toLowerCase();
+  const dept = document.getElementById('m-dept')?.value || '';
+  const userW = (user?.skillsWanted||[]).map(s=>s.toLowerCase());
+  const userT = (user?.skillsOffered||[]).map(s=>s.toLowerCase());
+
+  // Use real Firestore users — no fake STUDENTS array
+  let list = allUsers.filter(s => {
+    const dOk = !dept || s.dept === dept;
+    const qOk = !q ||
+      (s.name||'').toLowerCase().includes(q) ||
+      (s.skillsOffered||[]).some(t=>t.toLowerCase().includes(q)) ||
+      (s.skillsWanted||[]).some(w=>w.toLowerCase().includes(q));
+    return dOk && qOk;
+  }).map(s => {
+    // Score: how well skills complement each other
+    let score = 0;
+    (s.skillsOffered||[]).forEach(t=>{ if(userW.some(w=>t.toLowerCase().includes(w)||w.includes(t.toLowerCase()))) score+=2; });
+    (s.skillsWanted||[]).forEach(w=>{ if(userT.some(t=>w.toLowerCase().includes(t)||t.includes(w.toLowerCase()))) score+=2; });
+    return {...s, score};
+  }).sort((a,b)=>b.score-a.score);
+
+  const grid = document.getElementById('match-grid');
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="ei">${allUsers.length===0?'👥':'🔍'}</div>
+      <p>${allUsers.length===0
+        ? 'No other students have signed up yet. Invite your friends to join SkillSwap!'
+        : 'No matches found. Try a different filter.'}</p></div>`;
+    return;
+  }
+
+  const initials = name => (name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  // Galaxy palette — each card gets its own unique accent
+  const galaxyPalettes = [
+    { color:'#7b6fff', accent:'linear-gradient(90deg,#7b6fff,#00e5c8)', label:'violet-cyan' },
+    { color:'#ff4db8', accent:'linear-gradient(90deg,#ff4db8,#ffc542)', label:'rose-gold'   },
+    { color:'#00e5c8', accent:'linear-gradient(90deg,#00e5c8,#7b6fff)', label:'cyan-violet' },
+    { color:'#ffc542', accent:'linear-gradient(90deg,#ffc542,#ff4db8)', label:'gold-rose'   },
+    { color:'#a8ff3e', accent:'linear-gradient(90deg,#a8ff3e,#00e5c8)', label:'lime-cyan'   },
+    { color:'#c464ff', accent:'linear-gradient(90deg,#c464ff,#ff4db8)', label:'purple-rose' },
+    { color:'#ff7c4d', accent:'linear-gradient(90deg,#ff7c4d,#ffc542)', label:'coral-gold'  },
+    { color:'#4db8ff', accent:'linear-gradient(90deg,#4db8ff,#a8ff3e)', label:'sky-lime'    },
+  ];
+  const paletteFor = uid => galaxyPalettes[Math.abs(uid.split('').reduce((a,c)=>a+c.charCodeAt(0),0)) % galaxyPalettes.length];
+  const colorFor   = uid => paletteFor(uid).color;
+
+  grid.innerHTML = list.map((s, idx) => {
+    const pal = paletteFor(s.uid);
+    const scoreMax = 8;
+    const scorePct = Math.min(Math.round((s.score / scoreMax) * 100), 100);
+    const matchLabel = s.score >= 6 ? '🔥 Perfect' : s.score >= 3 ? '⚡ Great Match' : s.score > 0 ? '✨ Good Match' : '';
+    return `
+    <div class="match-card"
+         style="--card-accent:${pal.accent}; --mc-color:${pal.color}; animation-delay:${idx*0.06}s"
+         onmousemove="ssCardTilt(event,this)" onmouseleave="ssCardReset(this)">
+      <div class="card-glow"></div>
+      <div class="mc-head">
+        <div class="av-md" style="background:${s.profilePicture?'transparent':pal.color}">
+          ${s.profilePicture
+            ? `<img src="${s.profilePicture}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`
+            : initials(s.name)}
+        </div>
+        <div class="mc-info">
+          <h4>${s.name||'Student'}</h4>
+          <span>${s.dept||'Campus'}</span>
+        </div>
+        ${matchLabel ? `<div class="mc-match-badge">${matchLabel}</div>` : ''}
+      </div>
+      ${s.score > 0 ? `<div class="mc-score-bar"><div class="mc-score-fill" style="width:${scorePct}%; animation-delay:${idx*0.06+0.2}s"></div></div>` : ''}
+      <div class="mc-skills">
+        <div class="mc-skills-lbl">Can Teach You</div>
+        <div class="tag-wrap">${(s.skillsOffered||['No skills listed']).slice(0,4).map(t=>`<span class="tag tag-teach">${t}</span>`).join('')}</div>
+      </div>
+      <div class="mc-skills">
+        <div class="mc-skills-lbl">Wants to Learn</div>
+        <div class="tag-wrap">${(s.skillsWanted||['Nothing listed']).slice(0,4).map(w=>`<span class="tag tag-want">${w}</span>`).join('')}</div>
+      </div>
+      <div class="mc-footer">
+        <span class="mc-rep">⭐ ${s.rep||0} pts</span>
+        <div class="mc-btns">
+          <button class="btn btn-primary btn-xs" onclick="openReqModal('${s.uid}','${(s.name||'Student').replace(/'/g,"\'")}')">Request</button>
+          <button class="btn btn-ghost btn-xs" onclick="openChatWith('${s.uid}','${(s.name||'Student').replace(/'/g,"\'")}','Skill Exchange','${pal.color}')">💬 Chat</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// REQUESTS
+// ══════════════════════════════════════════════════════════════════
+function setReqTab(el, tab) {
+  document.querySelectorAll('.req-tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  reqTabState = tab;
+  renderReqs();
+}
+
+function renderReqs() {
+  const reqs = REQUESTS[reqTabState] || [];
+  document.getElementById('pcount').textContent = REQUESTS.pending.length;
+  if (!reqs.length) {
+    document.getElementById('req-list').innerHTML = `<div class="empty-state"><div class="ei">📭</div><p>No ${reqTabState} requests</p></div>`;
+    return;
+  }
+  const colors = ['#4f8eff','#e11d48','#7c3aed','#059669','#d97706'];
+  document.getElementById('req-list').innerHTML = reqs.map(r=>`
+    <div class="req-card" id="rc-${r.id}">
+      <div class="av-md" style="background:${r.clr||colors[0]};width:40px;height:40px;min-width:40px;flex-shrink:0">${(r.name||'?')[0]}</div>
+      <div class="req-body">
+        <h4>${r.name} <span style="font-weight:400;color:var(--text-faint);font-size:0.73rem">· ${r.dept||''}</span></h4>
+        <p>Offers: <span style="color:var(--accent)">${r.teach}</span> &nbsp;·&nbsp; Wants: <span style="color:var(--accent2)">${r.want}</span></p>
+      </div>
+      <div class="req-acts">
+        ${reqTabState==='pending'
+          ? `<button class="btn btn-success btn-xs" onclick="acceptReq('${r.id}')">✓ Accept</button>
+             <button class="btn btn-danger btn-xs"  onclick="declineReq('${r.id}')">✕</button>`
+          : reqTabState==='accepted'
+          ? `<button class="btn btn-primary btn-xs" onclick="completeReq('${r.id}')">✅ Done</button>
+             <button class="btn btn-ghost btn-xs"   onclick="openChatWith('${r.targetUid||''}','${r.name}','${r.teach} ↔ ${r.want}','${r.clr||colors[0]}')">💬 Chat</button>
+             <button class="btn btn-ghost btn-xs"   onclick="startVideoWith('${r.id}','${r.name}')">📹 Call</button>`
+          : `<span class="badge badge-done">Completed</span>`
+        }
+      </div>
+    </div>`).join('');
+}
+
+function openReqModal(targetUid, targetName) {
+  reqTargetId = targetUid;
+  document.getElementById('req-target').textContent = targetName;
+  const userSkills = user?.skillsOffered || ['My skills'];
+  const theirSkills = (allUsers.find(u=>u.uid===targetUid)?.skillsOffered) || ['Their skills'];
+  document.getElementById('req-teach').innerHTML = userSkills.map(t=>`<option>${t}</option>`).join('');
+  document.getElementById('req-want').innerHTML  = theirSkills.map(t=>`<option>${t}</option>`).join('');
+  openOverlay('req-overlay');
+}
+
+function sendRequest() {
+  const target = allUsers.find(u=>u.uid===reqTargetId);
+  if (!target) return;
+  const colors = ['#4f8eff','#e11d48','#7c3aed','#059669','#d97706'];
+  const clr = colors[Math.abs((reqTargetId||'').split('').reduce((a,c)=>a+c.charCodeAt(0),0)) % colors.length];
+  const newReq = {
+    id: 'r'+Date.now(),
+    targetUid: reqTargetId,
+    name: target.name,
+    dept: target.dept,
+    teach: document.getElementById('req-want').value,
+    want:  document.getElementById('req-teach').value,
+    clr
+  };
+  REQUESTS.pending.unshift(newReq);
+  closeOverlay('req-overlay');
+  renderReqs(); renderDash();
+  toast('🚀','Request sent to '+target.name+'!');
+}
+
+function acceptReq(id) {
+  const i = REQUESTS.pending.findIndex(r=>r.id===id);
+  if(i<0) return;
+  const r = REQUESTS.pending.splice(i,1)[0];
+  r.acceptedAt = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  REQUESTS.accepted.unshift(r);
+  renderReqs(); renderDash();
+  toast('✅','Exchange request accepted!');
+}
+
+function declineReq(id) {
+  REQUESTS.pending = REQUESTS.pending.filter(r=>r.id!==id);
+  renderReqs(); renderDash();
+  toast('❌','Request declined');
+}
+
+function completeReq(id) {
+  const i = REQUESTS.accepted.findIndex(r=>r.id===id);
+  if(i<0) return;
+  const r = REQUESTS.accepted.splice(i,1)[0];
+  r.completedAt = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  REQUESTS.completed.unshift(r);
+  // Award rep points in Firestore
+  db.collection('users').doc(user.uid).update({ rep: firebase.firestore.FieldValue.increment(30) }).catch(()=>{});
+  renderReqs(); renderDash();
+  toast('🏆','Exchange completed! +30 Reputation Points!');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// TRACKER
+// ══════════════════════════════════════════════════════════════════
+function renderTracker() {
+  if (!user) return;
+  const stats = computeStats();
+  const repBd = document.getElementById('rep-breakdown');
+  const totalRep = stats.rep;
+
+  if (totalRep === 0) {
+    repBd.innerHTML = `<div class="empty-state" style="padding:1.5rem"><div class="ei">📊</div><p>No reputation yet. Accept and complete exchanges to earn points!</p></div>`;
+  } else {
+    const ptsCompleted = REQUESTS.completed.length * 30;
+    const ptsAccepted  = REQUESTS.accepted.length  * 10;
+    const responseRate = (REQUESTS.pending.length + REQUESTS.accepted.length + REQUESTS.completed.length) > 0
+      ? Math.round(((REQUESTS.accepted.length + REQUESTS.completed.length) /
+          (REQUESTS.pending.length + REQUESTS.accepted.length + REQUESTS.completed.length)) * 100) : 0;
+    const bars = [
+      { label:'Points from Completed Exchanges', val:ptsCompleted, pct:Math.round((ptsCompleted/Math.max(totalRep,1))*100) },
+      { label:'Points from Accepted Exchanges',  val:ptsAccepted,  pct:Math.round((ptsAccepted/Math.max(totalRep,1))*100)  },
+      { label:'Skills Taught & Learned',         val:REQUESTS.completed.length+REQUESTS.accepted.length, pct:Math.min((REQUESTS.completed.length+REQUESTS.accepted.length)*10,100) },
+      { label:'Request Response Rate',           val:responseRate+'%', pct:responseRate },
+    ];
+    repBd.innerHTML = bars.map(b=>`
+      <div class="stat-row">
+        <div class="stat-lbl"><span>${b.label}</span><span>${typeof b.val==='number'&&!String(b.val).includes('%')?b.val+' pts':b.val}</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${b.pct}%"></div></div>
+      </div>`).join('');
+  }
+
+  const histEl = document.getElementById('hist-list');
+  const allHistory = [
+    ...REQUESTS.completed.map(r=>({ r, status:'Completed', prog:100,  icon:'✅', pts:'+30 pts', date:r.completedAt||'Just now' })),
+    ...REQUESTS.accepted.map(r=> ({ r, status:'Ongoing',   prog:50,   icon:'🤝', pts:'+10 pts', date:r.acceptedAt||'Just now'  })),
+    ...REQUESTS.pending.map(r=>  ({ r, status:'Pending',   prog:15,   icon:'📨', pts:'Pending',  date:'Just now' })),
+  ];
+  if (!allHistory.length) {
+    histEl.innerHTML = `<div class="empty-state"><div class="ei">📋</div><p>No exchange history yet. Send or accept a request to start!</p></div>`;
+  } else {
+    histEl.innerHTML = allHistory.map(({ r, status, prog, icon, pts, date })=>`
+      <div class="hist-card">
+        <div class="hist-head">
+          <div class="hist-icon">${icon}</div>
+          <div class="hist-info"><h4>You teach <strong>${r.want}</strong> · Learn <strong>${r.teach}</strong></h4><p>with ${r.name} &nbsp;·&nbsp; ${date}</p></div>
+          <div class="hist-pts">${pts}</div>
+        </div>
+        <div class="prog-lbl"><span>${status}</span><span>${prog}%</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${prog}%"></div></div>
+      </div>`).join('');
+  }
+
+  // Leaderboard — from real Firestore users
+  const colors = ['#4f8eff','#e11d48','#7c3aed','#059669','#d97706','#dc2626'];
+  const colorFor = uid => colors[Math.abs((uid||'').split('').reduce((a,c)=>a+c.charCodeAt(0),0)) % colors.length];
+  let lb = allUsers.map(u => ({ name:u.name||'Student', dept:(u.dept||'Campus').split(' ')[0], rep:u.rep||0, uid:u.uid }));
+  lb.push({ name:user.name||'You', dept:(user.dept||'Campus').split(' ')[0], rep:stats.rep, uid:user.uid, isMe:true });
+  lb.sort((a,b)=>b.rep-a.rep);
+  lb = lb.slice(0,9);
+  const rankIco = ['🥇','🥈','🥉'];
+  const rankCls = ['rank-g','rank-s','rank-b'];
+  document.getElementById('lb-list').innerHTML = lb.map((s,i)=>`
+    <div class="lb-item" ${s.isMe?'style="background:var(--accent-glow);border-radius:10px;padding:0.7rem 0.5rem;margin:0 -0.5rem"':''}>
+      <div class="lb-rank ${rankCls[i]||''}">${i<3?rankIco[i]:i+1}</div>
+      <div class="lb-av" style="background:${colorFor(s.uid)}">${(s.name||'?')[0]}</div>
+      <div class="lb-info">
+        <h4>${s.name}${s.isMe?' <span style="color:var(--accent);font-size:0.68rem;font-weight:700">(you)</span>':''}</h4>
+        <span>${s.dept}</span>
+      </div>
+      <div class="lb-pts">${s.rep} pts</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// REAL-TIME CHAT (Firebase Firestore)
+// ──────────────────────────────────────────────────────────────────
+// Chat room ID = sorted UIDs joined by "_" so both users get same room.
+// e.g. user A (uid:abc) chats with B (uid:xyz) → room "abc_xyz" or "xyz_abc"
+// sorted → always same regardless of who opens first.
+// ══════════════════════════════════════════════════════════════════
+function getChatRoomId(uid1, uid2) {
+  return [uid1, uid2].sort().join('_');
+}
+
+function openChatWith(partnerUid, partnerName, skillLabel, partnerColor) {
+  if (!user || !partnerUid) { toast('⚠️','Cannot open chat — partner info missing.'); return; }
+  activeChatId = partnerUid;
+  document.getElementById('chat-av').textContent    = (partnerName||'?')[0].toUpperCase();
+  document.getElementById('chat-av').style.background = partnerColor || '#4f8eff';
+  document.getElementById('chat-name').textContent  = partnerName;
+  document.getElementById('chat-skill').textContent = skillLabel;
+  document.getElementById('chat-messages').innerHTML = '<div class="chat-empty">Loading messages…</div>';
+  document.getElementById('chat-overlay').style.display = 'flex';
+  setTimeout(()=>document.getElementById('chat-input').focus(), 100);
+
+  // Cancel previous listener
+  if (chatUnsub) chatUnsub();
+
+  const roomId = getChatRoomId(user.uid, partnerUid);
+  // Subscribe to real-time messages
+  chatUnsub = db.collection('chats').doc(roomId).collection('messages')
+    .orderBy('timestamp').onSnapshot(snap => {
+      const container = document.getElementById('chat-messages');
+      if (snap.empty) {
+        container.innerHTML = '<div class="chat-empty"><div style="font-size:2rem;margin-bottom:6px">👋</div>No messages yet — say hello!</div>';
+        return;
+      }
+      container.innerHTML = snap.docs.map(doc => {
+        const m    = doc.data();
+        const mine = m.senderUid === user.uid;
+        const time = m.timestamp?.toDate ? m.timestamp.toDate().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : 'just now';
+        return `<div class="msg-${mine?'mine':'theirs'}">${esc(m.text)}<div class="msg-meta">${mine?'You':esc(m.senderName)} · ${time}</div></div>`;
+      }).join('');
+      container.scrollTop = container.scrollHeight;
+    }, err => {
+      document.getElementById('chat-messages').innerHTML = '<div class="chat-empty" style="color:#e11d48">Could not load messages. Check connection.</div>';
+    });
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text  = input.value.trim();
+  if (!text || !activeChatId) return;
+  input.value = ''; input.style.height = 'auto';
+  const roomId = getChatRoomId(user.uid, activeChatId);
+  db.collection('chats').doc(roomId).collection('messages').add({
+    text,
+    senderUid:  user.uid,
+    senderName: user.name || 'Student',
+    timestamp:  firebase.firestore.FieldValue.serverTimestamp()
+  }).catch(() => toast('❌','Failed to send. Check connection.'));
+}
+
+function closeChat() {
+  document.getElementById('chat-overlay').style.display = 'none';
+  if (chatUnsub) { chatUnsub(); chatUnsub = null; }
+  activeChatId = null;
+}
+
+// Close chat when clicking outside panel
+document.getElementById('chat-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('chat-overlay')) closeChat();
+});
+
+// ══════════════════════════════════════════════════════════════════
+// VIDEO CALLS (Jitsi Meet — free, no account needed)
+// ──────────────────────────────────────────────────────────────────
+// Room name = "skillswap-" + sorted UIDs so both users join same room.
+// Your partner just needs to click "📹 Call" on the same exchange.
+// ══════════════════════════════════════════════════════════════════
+function openVideoCall() {
+  // Called from inside the chat panel
+  if (!activeChatId) return;
+  startVideoWith(getChatRoomId(user.uid, activeChatId), document.getElementById('chat-name').textContent);
+}
+
+function startVideoWith(roomSuffix, partnerName) {
+  const roomName = 'skillswap-' + roomSuffix;
+  const userName = encodeURIComponent(user.name || 'Student');
+  document.getElementById('video-title').textContent = '📹 Call with ' + partnerName;
+  document.getElementById('video-frame').src =
+    `https://meet.jit.si/${roomName}#config.prejoinPageEnabled=false&userInfo.displayName=${userName}`;
+  document.getElementById('video-overlay').style.display = 'flex';
+}
+
+function closeVideoCall() {
+  document.getElementById('video-overlay').style.display = 'none';
+  document.getElementById('video-frame').src = ''; // releases camera/mic
+}
+
+// ══════════════════════════════════════════════════════════════════
+// OVERLAYS / TOAST / UTILS
+// ══════════════════════════════════════════════════════════════════
+function openOverlay(id)  { document.getElementById(id).classList.add('open'); }
+function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if(e.target===o) closeOverlay(o.id); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeChat(); closeVideoCall(); }
+});
+
+let toastTimer;
+function toast(ico, msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('t-ico').textContent = ico;
+  document.getElementById('t-msg').textContent = msg;
+  const el = document.getElementById('toast');
+  el.classList.add('show');
+  toastTimer = setTimeout(()=>el.classList.remove('show'), 3200);
+}
+
+function v(id) { return document.getElementById(id)?.value?.trim()||''; }
+function validEmail(e) { return /\S+@\S+\.\S+/.test(e); }
+function show(id) { const el=document.getElementById(id); if(el){ el.classList.add('show'); el.style.display=''; } }
+function hide(id) { const el=document.getElementById(id); if(el) el.classList.remove('show'); }
+function esc(s)   { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+
+// stub — old switchTab no longer needed but kept to avoid errors
+function switchTab() {}
+
+// ══════════════════════════════════════════════
+// 3D CARD TILT — match cards
+// ══════════════════════════════════════════════
+function ssCardTilt(e, card) {
+  const r  = card.getBoundingClientRect();
+  const dx = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
+  const dy = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
+  const rotX = -dy * 7;
+  const rotY =  dx * 7;
+  card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.025) translateY(-6px)`;
+}
+function ssCardReset(card) {
+  card.style.transform = '';
+}
+
+// ── INIT ──
+// No renderMatches() or renderReqs() on load — user not logged in yet.
+// They get called by go() after login.
+
+</script>
+</body>
+</html>
