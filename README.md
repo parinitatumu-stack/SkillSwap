@@ -3,7 +3,7 @@
 
 A web platform where university students can **offer skills they know** and **request skills they want to learn** — like a barter system for knowledge. Built as part of the FWD Project Expo at KL University Bachupally.
 
-🔗 **Live Demo:** [skillswap-skill-exchange-network.netlify.app](https://skillswap-skill-exchange-network.netlify.app)
+🔗 **Live Demo:** [skillswap-skill-exchange-network.netlify.app](https://skillswap-parinitatumu.netlify.app/)
 
 ---
 
